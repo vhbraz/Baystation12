@@ -103,7 +103,7 @@
 /obj/machinery/turretid/emag_act(var/remaining_charges, var/mob/user)
 	if(!emagged)
 		to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
-		emagged = 1
+		emagged = TRUE
 		req_access.Cut()
 		locked = 0
 		ailock = 0
@@ -169,7 +169,7 @@
 			check_anomalies = value
 
 		if(!isnull(log_action))
-			log_and_message_admins("has [log_action]", 1)
+			log_and_message_admins("has [log_action]", usr, loc)
 
 		updateTurrets()
 		return 1

@@ -59,7 +59,7 @@
 		. = B.qdels - A.qdels
 
 /proc/cmp_ruincost_priority(datum/map_template/ruin/A, datum/map_template/ruin/B)
-	return initial(A.cost) - initial(B.cost)
+	return initial(A.spawn_cost) - initial(B.spawn_cost)
 
 /proc/cmp_timer(datum/timedevent/a, datum/timedevent/b)
 	return a.timeToRun - b.timeToRun
@@ -96,3 +96,6 @@
 		return 1
 
 	return sorttext(B.key, A.key)
+
+/proc/cmp_marking_order(list/A, list/B)
+	return A[1] - B[1][1]

@@ -895,7 +895,7 @@
 /turf/simulated/wall/prepainted,
 /area/maintenance/seconddeck/forestarboard)
 "bJ" = (
-/obj/machinery/deployable/barrier,
+/obj/machinery/barrier,
 /obj/effect/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/seconddeck/central)
@@ -1942,6 +1942,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/device/paint_sprayer,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/assembly/robotics)
 "dG" = (
@@ -6827,7 +6828,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/random_multi/single_item/summarydocuments/eng,
+/obj/random_multi/single_item/memo_engineering,
 /turf/simulated/floor/tiled/steel_grid,
 /area/engineering/engine_monitoring)
 "pq" = (

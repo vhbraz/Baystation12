@@ -13,7 +13,7 @@
 	id = "awaysite_errant_pisces"
 	description = "Xynergy carp trawler"
 	suffixes = list("errant_pisces/errant_pisces.dmm")
-	cost = 1
+	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/errant_pisces)
 
 /mob/living/simple_animal/hostile/carp/shark // generally stronger version of a carp that doesn't die from a mean look. Fance new sprites included, credits to F-Tang Steve
@@ -30,8 +30,7 @@
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
-	melee_damage_lower = 15
-	melee_damage_upper = 25
+	natural_weapon = /obj/item/natural_weapon/bite/strong
 	break_stuff_probability = 35
 	faction = "shark"
 

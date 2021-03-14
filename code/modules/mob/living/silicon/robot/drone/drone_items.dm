@@ -225,8 +225,8 @@
 				grab = 1
 				break
 
-		//We can grab the item, finally.
-		if(grab)
+		//We can grab the item, finally. (prevent grabbing if the target's loc is in a robot frame)
+		if(grab && !istype(target.loc,/obj/item/weapon/robot_module))
 			if(I == user.s_active)
 				var/obj/item/weapon/storage/storage = I
 				storage.close(user) //Closes the ui.
@@ -427,10 +427,6 @@
 
 //PRETTIER TOOL LIST.
 /mob/living/silicon/robot/drone/installed_modules()
-
-	if(weapon_lock)
-		to_chat(src, "<span class='danger'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>")
-		return
 
 	if(!module)
 		module = new /obj/item/weapon/robot_module/drone(src)

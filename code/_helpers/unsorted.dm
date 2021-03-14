@@ -514,12 +514,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/between(var/low, var/middle, var/high)
 	return max(min(middle, high), low)
 
-#if DM_VERSION < 513
-/proc/arctan(x)
-	var/y=arcsin(x/sqrt(1+x*x))
-	return y
-#endif
-
 //returns random gauss number
 proc/GaussRand(var/sigma)
 	var/x,y,rsq
@@ -603,8 +597,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 //Takes: Anything that could possibly have variables and a varname to check.
 //Returns: 1 if found, 0 if not.
 /proc/hasvar(var/datum/A, var/varname)
-	if(A.vars.Find(lowertext(varname))) return 1
-	else return 0
+	return !!list_find(A.vars, lowertext(varname))
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -1085,7 +1078,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	density = 0
 
 	anchored = 1
-	simulated = 0
+	simulated = FALSE
 
 	see_in_dark = 1e6
 

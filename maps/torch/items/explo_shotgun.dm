@@ -34,7 +34,7 @@
 
 /obj/item/weapon/gun/projectile/shotgun/pump/exploration/free_fire()
 	var/my_z = get_z(src)
-	if(!GLOB.using_map.station_levels.Find(my_z))
+	if(!list_find(GLOB.using_map.station_levels, my_z))
 		return TRUE
 	return ..()
 
@@ -118,7 +118,7 @@
 	closet_appearance = /decl/closet_appearance/wall/explo_gun
 	density = 0
 	anchored = 1
-	wall_mounted = 1
+	wall_mounted = TRUE
 	storage_types = CLOSET_STORAGE_ITEMS
 
 /obj/structure/closet/secure_closet/explo_gun/WillContain()

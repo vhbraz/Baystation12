@@ -9,14 +9,20 @@
 	desc = "It's a fossil."
 	var/animal = 1
 
-/obj/item/weapon/fossil/base/New()
-	var/list/l = list(/obj/item/weapon/fossil/bone=9,/obj/item/weapon/fossil/skull=3,
-	/obj/item/weapon/fossil/skull/horned=2)
-	var/t = pickweight(l)
-	var/obj/item/weapon/W = new t(src.loc)
-	var/turf/T = get_turf(src)
-	if(istype(T, /turf/simulated/mineral))
-		T:last_find = W
+/obj/item/weapon/fossil/base/Initialize()
+	. = ..()
+	if (. == INITIALIZE_HINT_QDEL)
+		return
+	var/list/fossil_weights = list(
+		/obj/item/weapon/fossil/bone = 9,
+		/obj/item/weapon/fossil/skull = 3,
+		/obj/item/weapon/fossil/skull/horned = 2
+	)
+	var/fossil_type = pickweight(fossil_weights)
+	var/obj/item/I = new fossil_type (loc)
+	var/turf/simulated/mineral/T = get_turf(src)
+	if (istype(T))
+		T.last_find = I
 	qdel(src)
 
 /obj/item/weapon/fossil/bone
@@ -66,7 +72,7 @@
 				src.bstate = 1
 				src.set_density(1)
 				src.SetName("alien skeleton display")
-				if(src.contents.Find(/obj/item/weapon/fossil/skull/horned))
+				if(list_find(src.contents, /obj/item/weapon/fossil/skull/horned))
 					src.desc = "A creature made of [src.contents.len-1] assorted bones and a horned skull. The plaque reads \'[plaque_contents]\'."
 				else
 					src.desc = "A creature made of [src.contents.len-1] assorted bones and a skull. The plaque reads \'[plaque_contents]\'."
@@ -78,7 +84,7 @@
 	else if(istype(W,/obj/item/weapon/pen))
 		plaque_contents = sanitize(input("What would you like to write on the plaque:","Skeleton plaque",""))
 		user.visible_message("[user] writes something on the base of [icon2html(src, viewers(get_turf(src)))] [src].","You relabel the plaque on the base of [icon2html(src, user)] [src].")
-		if(src.contents.Find(/obj/item/weapon/fossil/skull/horned))
+		if(list_find(src.contents, /obj/item/weapon/fossil/skull/horned))
 			src.desc = "A creature made of [src.contents.len-1] assorted bones and a horned skull. The plaque reads \'[plaque_contents]\'."
 		else
 			src.desc = "A creature made of [src.contents.len-1] assorted bones and a skull. The plaque reads \'[plaque_contents]\'."

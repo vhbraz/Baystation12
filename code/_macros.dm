@@ -1,17 +1,17 @@
 #define any2ref(x) "\ref[x]"
 
-#if DM_VERSION < 513
-
-#define islist(A) istype(A, /list)
-
-#define ismovable(A) istype(A, /atom/movable)
-
-#endif
+#define list_find(L, needle, LIMITS...) L.Find(needle, LIMITS)
 
 #define PUBLIC_GAME_MODE SSticker.master_mode
 
 #define Clamp(value, low, high) (value <= low ? low : (value >= high ? high : value))
 #define CLAMP01(x) 		(Clamp(x, 0, 1))
+
+var/const/POSITIVE_INFINITY = 1#INF // win: 1.#INF, lin: inf
+var/const/NEGATIVE_INFINITY = -1#INF // win: -1.#INF, lin: -inf
+//var/const/POSITIVE_NAN = -(1#INF/1#INF) // win: 1.#QNAN, lin: nan -- demonstration of creation, but not useful
+//var/const/NEGATIVE_NAN = (1#INF/1#INF) //win: -1.#IND, lin: -nan -- demonstration of creation, but not useful
+#define isfinite(N) (isnum(N) && ((N) == (N)) && ((N) != POSITIVE_INFINITY) && ((N) != NEGATIVE_INFINITY))
 
 #define get_turf(A) get_step(A,0)
 

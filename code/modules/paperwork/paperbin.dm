@@ -14,7 +14,7 @@
 
 
 /obj/item/weapon/paper_bin/MouseDrop(mob/user as mob)
-	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
+	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (list_find(usr.contents, src) || in_range(src, usr))))))
 		if(!istype(usr, /mob/living/carbon/slime) && !istype(usr, /mob/living/simple_animal))
 			if( !usr.get_active_hand() )		//if active hand is empty
 				var/mob/living/carbon/human/H = user
@@ -80,7 +80,7 @@
 	else if(istype(i, /obj/item/weapon/paper_bundle))
 		to_chat(user, "<span class='notice'>You loosen \the [i] and add its papers into \the [src].</span>")
 		var/was_there_a_photo = 0
-		for(var/obj/item/weapon/bundleitem in i) //loop through items in bundle
+		for(var/obj/item/bundleitem in i) //loop through items in bundle
 			if(istype(bundleitem, /obj/item/weapon/paper)) //if item is paper, add into the bin
 				papers.Add(bundleitem)
 				update_icon()

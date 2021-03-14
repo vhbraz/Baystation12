@@ -8,7 +8,7 @@
 
 	var/welded = 0
 	var/large = 1
-	var/wall_mounted = 0 //never solid (You can always pass over it)
+	var/wall_mounted = FALSE //equivalent to non-dense for air movement
 	var/health = 100
 	var/breakout = 0 //if someone is currently breaking out. mutex
 	var/storage_capacity = 2 * MOB_MEDIUM //This is so that someone can't pack hundreds of items in a locker/crate
@@ -338,7 +338,7 @@
 		return
 	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis)
 		return
-	if((!( istype(O, /atom/movable) ) || O.anchored || !Adjacent(user) || !Adjacent(O) || !user.Adjacent(O) || user.contents.Find(src)))
+	if((!( istype(O, /atom/movable) ) || O.anchored || !Adjacent(user) || !Adjacent(O) || !user.Adjacent(O) || list_find(user.contents, src)))
 		return
 	if(!isturf(user.loc)) // are you in a container/closet/pod/etc?
 		return

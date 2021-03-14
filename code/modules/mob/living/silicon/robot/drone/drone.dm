@@ -7,7 +7,7 @@ var/list/mob_hat_cache = list()
 		t_state = hat.item_state
 	var/key = "[t_state]_[offset_x]_[offset_y]"
 	if(!mob_hat_cache[key])            // Not ideal as there's no guarantee all hat icon_states
-		var/t_icon = default_onmob_icons[slot_head_str] // are unique across multiple dmis, but whatever.
+		var/t_icon = GLOB.default_onmob_icons[slot_head_str] // are unique across multiple dmis, but whatever.
 		if(hat.icon_override)
 			t_icon = hat.icon_override
 		else if(hat.item_icons && (slot_head_str in hat.item_icons))
@@ -31,7 +31,7 @@ var/list/mob_hat_cache = list()
 	gender = NEUTER
 	pass_flags = PASS_FLAG_TABLE
 	braintype = "Drone"
-	lawupdate = 0
+	lawupdate = FALSE
 	density = 1
 	req_access = list(access_engine, access_robotics)
 	integrated_light_max_bright = 0.5
@@ -254,8 +254,8 @@ var/list/mob_hat_cache = list()
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 
-	emagged = 1
-	lawupdate = 0
+	emagged = TRUE
+	lawupdate = FALSE
 	connected_ai = null
 	clear_supplied_laws()
 	clear_inherent_laws()
@@ -336,7 +336,7 @@ var/list/mob_hat_cache = list()
 	if(player.mob && player.mob.mind)
 		player.mob.mind.transfer_to(src)
 
-	lawupdate = 0
+	lawupdate = FALSE
 	to_chat(src, "<b>Systems rebooted</b>. Loading base pattern maintenance protocol... <b>loaded</b>.")
 	full_law_reset()
 	welcome_drone()

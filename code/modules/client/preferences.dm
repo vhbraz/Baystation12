@@ -109,7 +109,7 @@ datum/preferences
 
 	S.cd = "/torch"
 	for(var/slot = 1 to 40)
-		if(!S.dir.Find("character[slot]"))
+		if(!list_find(S.dir, "character[slot]"))
 			continue
 		S.cd = "/torch/character[slot]"
 		default_slot = slot
@@ -324,8 +324,8 @@ datum/preferences
 
 		for(var/BP in mark_datum.body_parts)
 			var/obj/item/organ/external/O = character.organs_by_name[BP]
-			if(O)
-				O.markings[M] = list("color" = mark_color, "datum" = mark_datum)
+			if (O)
+				O.markings[mark_datum] = mark_color
 
 	character.force_update_limbs()
 	character.update_mutations(0)
