@@ -141,9 +141,11 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 				targetpad = holopadlist["[temppad]"]
 				if(targetpad==src)
 					to_chat(user, "<span class='info'>Using such sophisticated technology, just to talk to yourself seems a bit silly.</span>")
+					targetpad = null //Clean up the mess after an unsuccessful call
 					return
 				if(targetpad && targetpad.caller_id)
 					to_chat(user, "<span class='info'>The pad flashes a busy sign. Maybe you should try again later..</span>")
+					targetpad = null //Clean up the mess after an unsuccessful call
 					return
 				if(targetpad)
 					make_call(targetpad, user)
@@ -237,8 +239,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 				else
 					ai_text = stars(text)
 			if(isanimal(M) && !M.universal_speak)
-				var/mob/living/simple_animal/SA = M
-				ai_text = pick(SA.speak)
+				var/datum/say_list/SA = M.say_list
+				if (SA)
+					ai_text = pick(SA.speak)
 			var/name_used = M.GetVoice()
 			//This communication is imperfect because the holopad "filters" voices and is only designed to connect to the master only.
 			var/short_links = master.get_preference_value(/datum/client_preference/ghost_follow_link_length) == GLOB.PREF_SHORT
@@ -248,8 +251,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/name_used = M.GetVoice()
 	var/message
 	if(isanimal(M) && !M.universal_speak)
-		var/mob/living/simple_animal/SA = M
-		message = get_hear_message(name_used, pick(SA.speak), verb, speaking)
+		var/datum/say_list/SA = M.say_list
+		if (SA)
+			message = get_hear_message(name_used, pick(SA.speak), verb, speaking)
 	else
 		message = get_hear_message(name_used, text, verb, speaking)
 	if(targetpad && !targetpad.incoming_connection) //If this is the pad you're making the call from and the call is accepted
@@ -308,7 +312,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			hologram.overlays += icon("icons/effects/effects.dmi", "malf-scanline")
 	hologram.mouse_opacity = 0//So you can't click on it.
 	hologram.layer = ABOVE_HUMAN_LAYER //Above all the other objects/mobs. Or the vast majority of them.
-	hologram.anchored = 1//So space wind cannot drag it.
+	hologram.anchored = TRUE//So space wind cannot drag it.
 	if(caller_id)
 		hologram.SetName("[caller_id.name] (Hologram)")
 		hologram.forceMove(get_step(src,1))
@@ -399,7 +403,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
  */
 
 /obj/machinery/hologram
-	anchored = 1
+	anchored = TRUE
 	idle_power_usage = 5
 	active_power_usage = 100
 

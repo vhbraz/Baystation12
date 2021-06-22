@@ -95,6 +95,7 @@
 	install_system(new /obj/item/mech_equipment/light(src), HARDPOINT_HEAD)
 	install_system(new /obj/item/mech_equipment/clamp(src), HARDPOINT_RIGHT_HAND)
 	install_system(new /obj/item/mech_equipment/mounted_system/taser/plasma(src), HARDPOINT_LEFT_HAND)
+	install_system(new /obj/item/mech_equipment/ionjets(src), HARDPOINT_BACK)
 
 /area/scavver
 	icon = 'maps/away/scavver/scavver_gantry_sprites.dmi'
@@ -160,7 +161,7 @@
 
 //smes
 /obj/machinery/power/smes/buildable/preset/scavver/smes
-	uncreated_component_parts = list(/obj/item/weapon/stock_parts/smes_coil = 1)
+	uncreated_component_parts = list(/obj/item/stock_parts/smes_coil = 1)
 	_input_maxed = TRUE
 	_output_maxed = TRUE
 	_input_on = TRUE
@@ -190,7 +191,7 @@
 
 /obj/structure/closet/secure_closet/freezer/fridge/scavver/WillContain()
 	return list(
-		/obj/item/weapon/reagent_containers/food/drinks/milk = 6,
-		/obj/item/weapon/reagent_containers/food/drinks/soymilk = 4,
-		/obj/item/weapon/storage/fancy/egg_box = 4
+		/obj/item/reagent_containers/food/drinks/milk = 6,
+		/obj/item/reagent_containers/food/drinks/soymilk = 4,
+		/obj/item/storage/fancy/egg_box = 4
 	)

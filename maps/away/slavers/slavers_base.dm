@@ -139,24 +139,24 @@
 	icon_state = "extremist"
 	icon_living = "extremist"
 	icon_dead = "extremist_dead"
-	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pushes"
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 4
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
 	health = 100
 	natural_weapon = /obj/item/natural_weapon/punch
 	can_escape = TRUE
 	unsuitable_atmos_damage = 15
 	var/corpse = /obj/effect/landmark/corpse/abolitionist
-	var/weapon = /obj/item/weapon/gun/energy/laser
+	var/weapon = /obj/item/gun/energy/laser
 	projectilesound = 'sound/weapons/laser.ogg'
 	ranged = 1
 	projectiletype = /obj/item/projectile/beam
 	faction = "extremist abolitionists"
+
+	ai_holder_type = /datum/ai_holder/simple_animal/ranged
 
 /mob/living/simple_animal/hostile/abolition_extremist/death(gibbed, deathmessage, show_dead_message)
 	. = ..(gibbed, deathmessage, show_dead_message)

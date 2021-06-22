@@ -2,16 +2,13 @@
 	name = "Construct"
 	real_name = "Construct"
 	desc = ""
-	speak = list("Hsssssssszsht.", "Hsssssssss...", "Tcshsssssssszht!")
 	speak_emote = list("hisses")
-	emote_hear = list("wails","screeches")
 	response_help  = "thinks better of touching"
 	response_disarm = "flailed at"
 	response_harm   = "punched"
 	icon_dead = "shade_dead"
 	speed = -1
 	a_intent = I_HURT
-	stop_automated_movement = 1
 	status_flags = CANPUSH
 	universal_speak = FALSE
 	universal_understand = TRUE
@@ -37,6 +34,9 @@
 	var/nullblock = 0
 	var/list/construct_spells = list()
 
+	ai_holder_type = /datum/ai_holder/simple_animal/melee
+	say_list = /datum/say_list/construct
+
 /mob/living/simple_animal/construct/cultify()
 	return
 
@@ -47,11 +47,11 @@
 	add_language(LANGUAGE_CULT)
 	add_language(LANGUAGE_CULT_GLOBAL)
 	for(var/spell in construct_spells)
-		src.add_spell(new spell, "const_spell_ready")
+		add_spell(new spell, "const_spell_ready")
 	update_icon()
 
 /mob/living/simple_animal/construct/death(gibbed, deathmessage, show_dead_message)
-	new /obj/item/weapon/ectoplasm (src.loc)
+	new /obj/item/ectoplasm (src.loc)
 	..(null,"collapses in a shattered heap.","The bonds tying you to this mortal plane have been severed.")
 	ghostize()
 	qdel(src)
@@ -61,31 +61,15 @@
 	..()
 	add_glow()
 
-/mob/living/simple_animal/construct/attack_animal(var/mob/user)
-	if(istype(user, /mob/living/simple_animal/construct/builder))
-		if(health < maxHealth)
-			adjustBruteLoss(-5)
-			user.visible_message("<span class='notice'>\The [user] mends some of \the [src]'s wounds.</span>")
-		else
-			to_chat(user, "<span class='notice'>\The [src] is undamaged.</span>")
-		return
-	return ..()
-
 /mob/living/simple_animal/construct/examine(mob/user)
-	. = ..(user)
-	var/msg = "<span cass='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!\n"
-	if (src.health < src.maxHealth)
-		msg += "<span class='warning'>"
-		if (src.health >= src.maxHealth/2)
-			msg += "It looks slightly dented.\n"
+	. = ..()
+	if (health < maxHealth)
+		if (health >= maxHealth / 2)
+			to_chat(user, SPAN_WARNING("It looks slightly dented."))
 		else
-			msg += "<B>It looks severely dented!</B>\n"
-		msg += "</span>"
-	msg += "*---------*</span>"
+			to_chat(user, SPAN_WARNING(SPAN_BOLD("It looks severely dented!")))
 
-	to_chat(user, msg)
-
-/obj/item/weapon/ectoplasm
+/obj/item/ectoplasm
 	name = "ectoplasm"
 	desc = "Spooky."
 	gender = PLURAL
@@ -127,7 +111,7 @@
 /mob/living/simple_animal/construct/armoured/Life()
 	weakened = 0
 	if ((. = ..()))
-		return 
+		return
 
 /mob/living/simple_animal/construct/armoured/bullet_act(var/obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
@@ -159,7 +143,7 @@
 /mob/living/simple_animal/construct/wraith
 	name = "Wraith"
 	real_name = "Wraith"
-	desc = "A wicked bladed shell contraption piloted by a bound spirit."
+	desc = "A wicked contraption with a bladed shell, piloted by a bound spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "floating"
 	icon_living = "floating"
@@ -171,6 +155,12 @@
 	environment_smash = 1
 	see_in_dark = 7
 	construct_spells = list(/spell/targeted/ethereal_jaunt/shift)
+
+/mob/living/simple_animal/construct/wraith/can_fall(anchor_bypass, turf/location_override)
+	return FALSE
+
+/mob/living/simple_animal/construct/wraith/can_overcome_gravity()
+	return TRUE
 
 /obj/item/natural_weapon/wraith
 	name = "wicked blade"
@@ -210,6 +200,16 @@
 	attack_verb = list("rammed")
 	force = 5
 
+/obj/item/natural_weapon/cult_builder/attack(mob/living/M, mob/living/user)
+	if(istype(M, /mob/living/simple_animal/construct))
+		if(M.health < M.maxHealth)
+			M.adjustBruteLoss(-5)
+			user.visible_message(SPAN_NOTICE("\The [user] mends some of \the [M]'s wounds."))
+		else
+			to_chat(user, SPAN_NOTICE("\The [M] is undamaged."))
+		return
+	return ..()
+
 /////////////////////////////Behemoth/////////////////////////
 
 
@@ -228,7 +228,7 @@
 	natural_weapon = /obj/item/natural_weapon/juggernaut/behemoth
 	speed = 5
 	environment_smash = 2
-	
+
 	resistance = 10
 	var/energy = 0
 	var/max_energy = 1000
@@ -363,3 +363,7 @@
 			if(25 to 49)			healths.icon_state = "harvester_health5"
 			if(1 to 24)				healths.icon_state = "harvester_health6"
 			else					healths.icon_state = "harvester_health7"
+
+/datum/say_list/construct
+	speak = list("Hsssssssszsht.", "Hsssssssss...", "Tcshsssssssszht!")
+	emote_hear = list("wails","screeches")

@@ -38,7 +38,7 @@
 	natural_weapon = /obj/item/natural_weapon/pincers/strong
 	resistance = 9
 	can_escape = TRUE //snip snip
-	density = 0
+	density = FALSE
 
 /obj/item/natural_weapon/pincers/strong
 	force = 15
@@ -111,7 +111,7 @@
 
 	speak_emote = list("entones")
 	mob_size = MOB_SMALL
-	density = 0
+	density = FALSE
 	health = 25
 	maxHealth = 25
 
@@ -122,7 +122,7 @@
 
 /mob/living/simple_animal/familiar/pet //basically variants of normal animals with spells.
 	icon = 'icons/mob/simple_animal/animal.dmi'
-	var/icon_rest //so that we can have resting little guys.
+	icon_rest //so that we can have resting little guys.
 
 /mob/living/simple_animal/familiar/pet/Life()
 	. = ..()
@@ -142,7 +142,7 @@
 	icon_rest = "mouse_gray_sleep"
 
 	speak_emote = list("squeeks")
-	holder_type = /obj/item/weapon/holder/mouse
+	holder_type = /obj/item/holder/mouse
 	pass_flags = PASS_FLAG_TABLE
 	mob_size = MOB_MINISCULE
 
@@ -152,7 +152,7 @@
 	maxHealth = 15
 	natural_weapon = /obj/item/natural_weapon/bite/mouse
 	can_escape = TRUE
-	density = 0
+	density = FALSE
 
 	wizardy_spells = list(/spell/aoe_turf/smoke)
 
@@ -172,12 +172,12 @@
 
 
 	speak_emote = list("meows", "purrs")
-	holder_type = /obj/item/weapon/holder/cat
+	holder_type = /obj/item/holder/cat
 	mob_size = MOB_SMALL
 
 	health = 25
 	maxHealth = 25
 	natural_weapon = /obj/item/natural_weapon/claws/weak
-	density = 0
+	density = FALSE
 
 	wizardy_spells = list(/spell/targeted/subjugation)

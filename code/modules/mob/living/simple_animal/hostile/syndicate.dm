@@ -5,13 +5,11 @@
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"
 	icon_gib = "syndicate_gib"
-	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 4
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -42,9 +40,9 @@
 /mob/living/simple_animal/hostile/syndicate/melee
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
-	natural_weapon = /obj/item/weapon/melee/energy/sword/red/activated
-	weapon1 = /obj/item/weapon/melee/energy/sword/red/activated
-	weapon2 = /obj/item/weapon/shield/energy
+	natural_weapon = /obj/item/melee/energy/sword/red/activated
+	weapon1 = /obj/item/melee/energy/sword/red/activated
+	weapon2 = /obj/item/shield/energy
 	status_flags = 0
 
 /mob/living/simple_animal/hostile/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -91,7 +89,7 @@
 	projectilesound = 'sound/weapons/gunshot/gunshot_smg.ogg'
 	projectiletype = /obj/item/projectile/bullet/pistol
 
-	weapon1 = /obj/item/weapon/gun/projectile/automatic/merc_smg
+	weapon1 = /obj/item/gun/projectile/automatic/merc_smg
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space
 	icon_state = "syndicaterangedpsace"

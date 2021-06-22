@@ -214,8 +214,8 @@
 	desc = "Some kind of post, pillar, plinth, column, or totem."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "totem"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	unacidable = TRUE
 	var/number
 
@@ -228,7 +228,7 @@
 	to_chat(user, "It's been engraved with the symbols '<font face='Shage'>RWH QaG [number]</font>'.") //i am not a linguist
 
 
-/obj/item/weapon/stool/stone/New(var/newloc)
+/obj/item/stool/stone/New(var/newloc)
 	..(newloc,"sandstone")
 
 /turf/simulated/floor/airless/stone

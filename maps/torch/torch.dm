@@ -131,6 +131,7 @@
 
 	#include "loadout/_defines.dm"
 	#include "loadout/loadout_accessories.dm"
+	#include "loadout/loadout_augments.dm"
 	#include "loadout/loadout_ec_skillbadges.dm"
 	#include "loadout/loadout_eyes.dm"
 	#include "loadout/loadout_gloves.dm"
@@ -162,7 +163,6 @@
 	#include "../away/blueriver/blueriver.dm"
 	#include "../away/slavers/slavers_base.dm"
 	#include "../away/mobius_rift/mobius_rift.dm"
-	#include "../away/icarus/icarus.dm"
 	#include "../away/errant_pisces/errant_pisces.dm"
 	#include "../away/lar_maria/lar_maria.dm"
 	#include "../away/voxship/voxship.dm"
@@ -172,8 +172,7 @@
 	#include "../away/mininghome/mininghome.dm"
 	#include "../away/scavver/scavver_gantry.dm"
 	#include "../away/verne/verne.dm"
-
-	#include "../../code/datums/music_tracks/chasing_time.dm"
+//	#include "../away/ascent_caulship/_ascent_caulship.dm"
 
 	#define using_map_DATUM /datum/map/torch
 
@@ -182,4 +181,3 @@
 	#warn A map has already been included, ignoring Torch
 
 #endif
-

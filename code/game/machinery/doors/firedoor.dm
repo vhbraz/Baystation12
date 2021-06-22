@@ -22,6 +22,7 @@
 	closed_layer = ABOVE_WINDOW_LAYER
 	movable_flags = MOVABLE_FLAG_Z_INTERACT
 	pry_mod = 0.75
+	atom_flags = ATOM_FLAG_ADJACENT_EXCEPTION
 	var/locked = FALSE //If the door is forced open, it will not close again until the next atmosphere alert in the area
 
 	//These are frequently used with windows, so make sure zones can pass.
@@ -35,7 +36,7 @@
 
 	var/pdiff = 0 // Pressure differential. Set to the difference between highest and lowest adjacent pressures in Process()
 	var/pdiff_alert = FALSE // If this firedoor has an active alert for pressure differential.
-	
+
 	var/nextstate = null
 	var/net_id
 	var/list/areas_added
@@ -202,9 +203,9 @@
 	add_fingerprint(user, 0, C)
 	if(operating)
 		return //Already doing something.
-			
+
 	if(isWelder(C) && !repairing)
-		var/obj/item/weapon/weldingtool/W = C
+		var/obj/item/weldingtool/W = C
 		if(W.remove_fuel(0, user))
 			user.visible_message(
 				SPAN_WARNING("\The [user] starts [!blocked ? "welding \the [src] shut" : "cutting open \the [src]"]."),
@@ -223,9 +224,6 @@
 				)
 				playsound(loc, 'sound/items/Welder2.ogg', 50, TRUE)
 				update_icon()
-				return
-			else
-				to_chat(user, SPAN_WARNING("You must remain still to complete this task."))
 				return
 
 	if(density && isScrewdriver(C))
@@ -258,15 +256,13 @@
 						SPAN_ITALIC("You hear metal coming loose and clattering.")
 					)
 					deconstruct(user)
-			else
-				to_chat(user, SPAN_NOTICE("You must remain still to remove the electronics from \the [src]."))
 		return
 
 	if(blocked)
 		to_chat(user, SPAN_DANGER("\The [src] is welded shut!"))
 		return
 
-	if(isCrowbar(C) || istype(C,/obj/item/weapon/material/twohanded/fireaxe))
+	if(isCrowbar(C) || istype(C,/obj/item/material/twohanded/fireaxe))
 		if(operating)
 			return
 
@@ -278,8 +274,8 @@
 			)
 			return
 
-		if(istype(C,/obj/item/weapon/material/twohanded/fireaxe))
-			var/obj/item/weapon/material/twohanded/fireaxe/F = C
+		if(istype(C,/obj/item/material/twohanded/fireaxe))
+			var/obj/item/material/twohanded/fireaxe/F = C
 			if(!F.wielded)
 				return
 
@@ -313,16 +309,13 @@
 					locked = FALSE
 					close()
 			return
-		else
-			to_chat(user, SPAN_WARNING("You must remain still to interact with \the [src]."))
-			return
 	return ..()
 
 /obj/machinery/door/firedoor/deconstruct(mob/user, var/moved = FALSE)
 	if (stat & BROKEN)
-		new /obj/item/weapon/stock_parts/circuitboard/broken(loc)
+		new /obj/item/stock_parts/circuitboard/broken(loc)
 	else
-		new/obj/item/weapon/airalarm_electronics(loc)
+		new/obj/item/airalarm_electronics(loc)
 
 	var/obj/structure/firedoor_assembly/FA = new/obj/structure/firedoor_assembly(loc)
 	FA.anchored = !moved
@@ -350,7 +343,7 @@
 		else
 			if(pdiff_alert)
 				pdiff_alert = FALSE
-				changed = TRUE 
+				changed = TRUE
 
 		tile_info = getCardinalAirInfo(loc,list("temperature", "pressure"))
 		var/old_alerts = dir_alerts
@@ -402,7 +395,7 @@
 	if(length(people))
 		visible_message(
 			SPAN_DANGER("\The [src] beeps ominously, get out of the way!"),
-			SPAN_DANGER("You hear buzzing coming from the ceiling."), 
+			SPAN_DANGER("You hear buzzing coming from the ceiling."),
 			range = 3
 		)
 		playsound(loc, "sound/machines/firedoor.ogg", 50)
@@ -438,7 +431,7 @@
 					SPAN_WARNING("You hear metal smacking into something.")
 				)
 				M.apply_damage(10, BRUTE, used_weapon = src)
-				if(direction) 
+				if(direction)
 					M.Move(get_step(src, direction))
 	playsound(loc, close_sound, 25, TRUE)
 	closing = FALSE

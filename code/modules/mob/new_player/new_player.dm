@@ -12,11 +12,11 @@
 
 	invisibility = 101
 
-	density = 0
+	density = FALSE
 	stat = DEAD
 
 	movement_handlers = list()
-	anchored = 1	//  don't get pushed around
+	anchored = TRUE	//  don't get pushed around
 
 	virtual_mob = null // Hear no evil, speak no evil
 
@@ -91,7 +91,7 @@
 		return TOPIC_NOACTION
 
 	if(href_list["show_preferences"])
-		client.prefs.ShowChoices(src)
+		client.prefs.open_setup_window(src)
 		return 1
 
 	if(href_list["ready"])
@@ -461,5 +461,6 @@ mob/new_player/MayRespawn()
 
 	if(get_preference_value(/datum/client_preference/play_lobby_music) == GLOB.PREF_NO)
 		return
-	var/music_track/new_track = GLOB.using_map.get_lobby_track(GLOB.using_map.lobby_track.type)
-	new_track.play_to(src)
+	var/decl/audio/track/track = GLOB.using_map.get_lobby_track(GLOB.using_map.lobby_track.type)
+	sound_to(src, track.get_sound())
+	to_chat(src, track.get_info())

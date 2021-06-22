@@ -123,7 +123,7 @@
 	the secrets of their empire to their allies."
 	assisted_langs = list(LANGUAGE_NABBER)
 	health_hud_intensity = 1.75
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/fish/octopus
+	meat_type = /obj/item/reagent_containers/food/snacks/fish/octopus
 	bone_material = MATERIAL_BONE_CARTILAGE
 	genders = list(PLURAL)
 	hidden_from_codex = FALSE
@@ -251,6 +251,12 @@
 
 /datum/species/skrell/check_background()
 	return TRUE
+	
+/datum/species/skrell/can_float(mob/living/carbon/human/H)
+	if(!H.is_physically_disabled())
+		if(H.encumbrance() < 2)
+			return TRUE
+	return FALSE
 
 /datum/species/diona
 	name = SPECIES_DIONA
@@ -381,7 +387,7 @@
 	return 0
 
 /datum/species/diona/equip_survival_gear(var/mob/living/carbon/human/H)
-	if(istype(H.get_equipped_item(slot_back), /obj/item/weapon/storage/backpack))
+	if(istype(H.get_equipped_item(slot_back), /obj/item/storage/backpack))
 		H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H.back), slot_in_backpack)
 	else
 		H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H), slot_r_hand)
@@ -422,7 +428,7 @@
 		H.visible_message("<span class='danger'>\The [H] collapses into parts, revealing a solitary diona nymph at the core.</span>")
 		return
 	else
-		split_into_nymphs(H)
+		split_into_nymphs(H, TRUE)
 
 /datum/species/diona/get_blood_name()
 	return "sap"

@@ -8,18 +8,18 @@
 	maxHealth = 100
 	natural_weapon = /obj/item/natural_weapon/bite/strong
 	faction = MOB_FACTION_NEUTRAL
-	density = 0
-	stop_automated_movement = 1
-	wander = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/password
 	var/list/allowed_mobs = list() //Who we allow past us
 	var/last_check = 0
 	faction = "cute ghost dogs"
 	supernatural = 1
 
+	ai_holder_type = /datum/ai_holder/simple_animal/faithful_hound
+
 /mob/living/simple_animal/faithful_hound/death()
-	new /obj/item/weapon/ectoplasm (get_turf(src))
+	new /obj/item/ectoplasm (get_turf(src))
 	..(null, "disappears!")
 	qdel(src)
 
@@ -64,3 +64,6 @@
 		allowed_mobs |= speaker
 		spawn(10)
 			src.visible_message("<span class='notice'>\The [src] nods in understanding towards \the [speaker].</span>")
+
+/datum/ai_holder/simple_animal/faithful_hound
+	wander = FALSE

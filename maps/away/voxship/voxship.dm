@@ -3,6 +3,7 @@
 #include "voxship_areas.dm"
 #include "voxship_jobs.dm"
 #include "voxship_radio.dm"
+#include "voxship_machines.dm"
 
 /datum/map_template/ruin/away_site/scavship
 	name = "Vox Scavenger Ship"
@@ -103,7 +104,7 @@
 
 //shuttle APC terminal kept being deleted by z level changes
 /obj/machinery/power/apc/debug/vox
-	cell_type = /obj/item/weapon/cell/infinite
+	cell_type = /obj/item/cell/infinite
 	req_access = list(access_voxship)
 
 /obj/effect/submap_landmark/joinable_submap/voxship/scavship/New()
@@ -148,8 +149,8 @@
 
 /obj/machinery/power/smes/buildable/preset/voxship/ship
 	uncreated_component_parts = list(
-		/obj/item/weapon/stock_parts/smes_coil/super_capacity = 1,
-		/obj/item/weapon/stock_parts/smes_coil/super_io = 1
+		/obj/item/stock_parts/smes_coil/super_capacity = 1,
+		/obj/item/stock_parts/smes_coil/super_io = 1
 	)
 	_input_maxed = TRUE
 	_output_maxed = TRUE

@@ -1,4 +1,4 @@
-/mob/living/simple_animal/lizard
+/mob/living/simple_animal/friendly/lizard
 	name = "lizard"
 	desc = "A cute tiny lizard."
 	icon = 'icons/mob/simple_animal/critter.dmi'
@@ -16,7 +16,7 @@
 	possession_candidate = 1
 	can_escape = TRUE
 	pass_flags = PASS_FLAG_TABLE
-	density = 0
+	density = FALSE
 
 	meat_amount = 1
 	bone_amount = 1

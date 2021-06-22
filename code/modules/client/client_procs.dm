@@ -358,7 +358,6 @@
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
-
 	getFiles(
 		'html/search.js',
 		'html/panels.css',
@@ -376,11 +375,13 @@
 		'html/images/fleetlogo.png',
 		'html/images/sfplogo.png'
 		)
+	addtimer(CALLBACK(src, .proc/after_send_resources), 1 SECOND)
 
+
+/client/proc/after_send_resources()
 	var/decl/asset_cache/asset_cache = decls_repository.get_decl(/decl/asset_cache)
-	spawn (10) //removing this spawn causes all clients to not get verbs.
-		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, asset_cache.cache, register_asset = FALSE)
+	getFilesSlow(src, asset_cache.cache, register_asset = FALSE)
+
 
 mob/proc/MayRespawn()
 	return 0
@@ -396,7 +397,7 @@ client/verb/character_setup()
 	set name = "Character Setup"
 	set category = "OOC"
 	if(prefs)
-		prefs.ShowChoices(usr)
+		prefs.open_setup_window(usr)
 
 /client/proc/apply_fps(var/client_fps)
 	if(world.byond_version >= 511 && byond_version >= 511 && client_fps >= CLIENT_MIN_FPS && client_fps <= CLIENT_MAX_FPS)
@@ -407,6 +408,11 @@ client/verb/character_setup()
 	var/mob/living/M = mob
 	if(istype(M))
 		M.OnMouseDrag(src_object, over_object, src_location, over_location, src_control, over_control, params)
+
+	var/datum/click_handler/build_mode/B = M.GetClickHandler()
+	if (istype(B))
+		if(B.current_build_mode && src_control == "mapwindow.map" && src_control == over_control)
+			build_drag(src,B.current_build_mode,src_object,over_object,src_location,over_location,src_control,over_control,params)
 
 /client/verb/toggle_fullscreen()
 	set name = "Toggle Fullscreen"
